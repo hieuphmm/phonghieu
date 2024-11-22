@@ -1,8 +1,9 @@
 #include <iostream>
 using namespace std;
-int main(){
+int main()
+{
 
-    x = 5;
-    cout<<x;
+    int x = 6;
+    cout << x;
     return 0;
 }
