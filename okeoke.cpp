@@ -2,7 +2,7 @@
 using namespace std;
 int main(){
 
-    x = 5;
+    int x = 5;
     cout<<x;
-    return 0;
+    return 0;sấddas
 }
