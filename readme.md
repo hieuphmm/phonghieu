@@ -39,59 +39,105 @@
 
 ### Step 3: Simulate a Conflict Scenario
 
-1. 
-
-2. **Steps for Person A**:  
-   - Modify the file (e.g., add a line saying "Hello from A").
-   - Stage, commit, and push the changes:
-     ```bash
-     git add README.md
-     git commit -m "Person A changes README.md"
-     git push
+Open file `group.txt` and write your name on first line.
+    ```
+     git add 
+     git commit -m "Add <yourname>'s name"
+     git push origin main
      ```
 
-3. **Steps for Person B**:  
-   - Pull the latest changes to ensure their local branch is up-to-date:
-     ```bash
-     git pull origin main
-     ```
-     - Make changes to the same file (e.g., add "Hello from B").
-     - Stage and commit:
-       ```bash
-       git add README.md
-       git commit -m "Person B changes README.md"
-       ```
-     - Try to push:
-       ```bash
-       git push
-       ```
-     > **Expected conflict error**:
-     > ```bash
-     > ! [rejected] main -> main (non-fast-forward)
-     > error: failed to push some refs to '<remote-repository-url>'
-     > ```
+     example:
+    ```
+     git add 
+     git commit -m "Add Khoa's name"
+     git push origin main
+    ```
 
-4. **Resolve the conflict**:  
-   - Person B should pull the latest changes:
-     ```bash
-     git pull origin main
+    *There should be error from the second try.*
+
+    So how to fix this?
+
+#### **Method 1: Pull Then Push**
+
+1. **Identify the conflict**  
+   When a member tries to push changes without pulling the latest updates, they will encounter an error:
+   ```bash
+   ! [rejected] main -> main (non-fast-forward)
+   error: failed to push some refs to '<remote-repository-url>'
+   ```
+
+2. **Pull the latest changes from the remote repository**  
+   Run the following command:
+   ```bash
+   git pull origin main
+   ```
+   - Git will attempt to merge the changes automatically.
+   - If there is a conflict in `group.txt`, Git will notify you and mark the conflict in the file.
+
+3. **Manually resolve the conflict**  
+   Open the `group.txt` file, and you'll see something like this:
+   ```plaintext
+   <<<<<<< HEAD
+   Khoa's name
+   =======
+   Another member's name
+   >>>>>>> 123abc456def
+   ```
+   - **Edit the file** to resolve the conflict. For example:
+     ```plaintext
+     Khoa's name
+     Another member's name
      ```
-   - Git will notify you of the conflict. Open the conflicted file to resolve it manually.
-   - After resolving, stage the file and commit:
-     ```bash
-     git add README.md
-     git commit -m "Resolve conflict in README.md"
-     ```
-   - Push the changes:
-     ```bash
-     git push
-     ```
+
+4. **Stage the resolved file and commit**  
+   ```bash
+   git add group.txt
+   git commit -m "Resolve conflict in group.txt"
+   ```
+
+5. **Push the resolved changes to the remote repository**  
+   ```bash
+   git push origin main
+   ```
 
 ---
 
-### Tips for Team Collaboration
-- **Communicate**: Always communicate changes with your team to minimize conflicts.
-- **Branching**: Use separate branches for feature development, and merge into the main branch after review.
-- **Pull Regularly**: Frequently pull the latest changes to stay updated.
+#### **Method 2: Use Branching**
 
-Would you like additional details on any step?
+This method avoids conflicts by allowing each member to work in their own branch and merge changes into the `main` branch.
+
+1. **Create a new branch for your changes**  
+   ```bash
+   git checkout -b <yourname>
+   ```
+   Replace `<yourname>` with your name.
+
+2. **Make changes in your branch**  
+   Open the `group.txt` file, add your name, and save it.
+
+3. **Stage and commit your changes**  
+   ```bash
+   git add group.txt
+   git commit -m "Add <yourname>'s name"
+   ```
+
+4. **Push your branch to the remote repository**  
+   ```bash
+   git push origin <yourname>
+   ```
+
+5. **Create a pull request on GitHub**  
+   - Go to your GitHub repository in your browser.
+   - Click on the **Pull requests** tab.
+   - Click **New pull request** and choose your branch.
+   - Review the changes and submit the PR.
+
+6. **Merge the pull request**  
+   - After a review, merge the pull request into the `main` branch.
+   - If there is a conflict, GitHub will notify you, and you can resolve it through the web interface or locally.
+
+7. **Pull the latest changes to your local `main` branch**  
+   ```bash
+   git checkout main
+   git pull origin main
+   ```
